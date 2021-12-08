@@ -39,9 +39,9 @@ async function getWeather(query) {
       const iconUrl = 'https://openweathermap.org/img/wn/' +
         data.weather[0].icon +
         '@2x.png'
-      const description = data.weather[0].description
-      const actualTemp = data.main.temp
-      const feelsLikeTemp = data.main.feels_like
+      const {weather:[{description}]} = data
+      const {main:{temp}} = data
+      const {main:{feels_like}} = data
       const place = data.name + ", " + data.sys.country
       // create JS date object from Unix timestamp
       const updatedAt = new Date(data.dt * 1000)
@@ -50,8 +50,8 @@ async function getWeather(query) {
         coords: data.coord.lat + ',' + data.coord.lon,
         description: description,
         iconUrl: iconUrl,
-        actualTemp: actualTemp,
-        feelsLikeTemp: feelsLikeTemp,
+        actualTemp: temp,
+        feelsLikeTemp: feels_like,
         place: place,
         updatedAt: updatedAt
       }
@@ -128,3 +128,4 @@ const displayWeatherInfo = (weatherObj) => {
     )
   weatherContainer.appendChild(updatedAt)
 }
+
